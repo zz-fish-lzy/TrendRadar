@@ -55,28 +55,10 @@ schedule:
 platforms:
   enabled: true                         # 是否启用热榜平台抓取
   sources:
-    - id: "toutiao"
-      name: "今日头条"
-    - id: "baidu"
-      name: "百度热搜"
-    - id: "wallstreetcn-hot"
-      name: "华尔街见闻"
-    - id: "thepaper"
-      name: "澎湃新闻"
-    - id: "bilibili-hot-search"
-      name: "bilibili 热搜"
     - id: "cls-hot"
       name: "财联社热门"
-    - id: "ifeng"
-      name: "凤凰网"
-    - id: "tieba"
-      name: "贴吧"
-    - id: "weibo"
-      name: "微博"
-    - id: "douyin"
-      name: "抖音"
-    - id: "zhihu"
-      name: "知乎"
+    - id: "wallstreetcn-hot"
+      name: "华尔街见闻"
 
 
 
@@ -113,26 +95,53 @@ rss:
   # - 正整数：覆盖全局设置，只推送此天数内的文章
   # - 0：禁用此频道的新鲜度过滤，推送所有文章
   feeds:
-    - id: "hacker-news"
-      name: "Hacker News"
-      url: "https://hnrss.org/frontpage"
+    # 宏观经济与政策（核心）
+    - id: "cls-7x24"
+      name: "财联社7x24滚动"
+      url: "https://www.cls.cn/rss/roll"
 
-    - id: "ruanyifeng"
-      name: "阮一峰的网络日志"
-      url: "http://www.ruanyifeng.com/blog/atom.xml"
-      enabled: false                  # 禁用
-      # max_age_days: 3               # 示例：推送 3 天内的文章（更新较慢的博客）
-     
-    - id: "yahoo-finance"
-      name: "雅虎财经"
-      url: "https://finance.yahoo.com/news/rssindex"
+    - id: "yicai"
+      name: "第一财经-财经要闻"
+      url: "https://www.yicai.com/rss/finance"
 
-    # 自定义源示例
-    # - id: "custom-feed"
-    #   name: "自定义源"
-    #   url: "https://example.com/feed.xml"
-    #   enabled: false
-    #   max_age_days: 0               # 示例：禁用过滤，推送所有文章
+    - id: "stcn"
+      name: "证券时报-要闻"
+      url: "https://www.stcn.com/rss/yaowen"
+
+    - id: "csj"
+      name: "中国证券报-要闻"
+      url: "https://www.cs.com.cn/rss/001/001001/index.html"
+
+    # 行业新闻
+    - id: "cls-tech"
+      name: "财联社-科技"
+      url: "https://www.cls.cn/rss/tech"
+
+    - id: "cls-energy"
+      name: "财联社-新能源"
+      url: "https://www.cls.cn/rss/energy"
+
+    - id: "cls-medicine"
+      name: "财联社-医药"
+      url: "https://www.cls.cn/rss/medicine"
+
+    - id: "cls-consume"
+      name: "财联社-消费"
+      url: "https://www.cls.cn/rss/consume"
+
+    - id: "cls-finance"
+      name: "财联社-金融"
+      url: "https://www.cls.cn/rss/finance_bank"
+
+    # 基金专属
+    - id: "eastmoney-fund"
+      name: "东方财富-基金要闻"
+      url: "https://fund.eastmoney.com/rss/fundnews"
+
+    # 债券
+    - id: "chinabond"
+      name: "中国债券信息网"
+      url: "https://www.chinabond.com.cn/cb/cn/xxpl/ywdt/rss.xml"
 
 
 # ===============================================================
@@ -178,7 +187,7 @@ report:
 # 5) 这里决定“筛选路径”，不决定 AI 模型（模型在 ai 段）
 # ===============================================================
 filter:
-  method: "ai"                     # 可选: keyword | ai
+  method: "keyword"                  # 可选: keyword | ai
 
   # AI 模式标签排序开关（仅 ai 模式生效）
   # true: 按标签优先级排序（来自兴趣描述提取顺序）
@@ -278,7 +287,7 @@ display:
   #   - AI 分析：由 ai_analysis.include_standalone 开关控制，将完整数据送入 AI 做深度分析
   # 两者共享此处的平台/RSS 配置，但开关互相独立（可只开 AI 分析、不推送展示）
   standalone:
-    platforms: ["zhihu", "wallstreetcn-hot"]     # 热榜平台 ID 列表（如 ["zhihu", "weibo"]）
+    platforms: ["wallstreetcn-hot", "cls-hot"]     # 热榜平台 ID 列表
     rss_feeds: []                     # RSS 源 ID 列表（如 ["hacker-news"]）
     max_items: 20                     # 每个源最多展示条数（0=不限制）
 
@@ -330,11 +339,11 @@ notification:
       chat_id: ""                     # Telegram Chat ID
 
     email:
-      from: ""                        # 发件人邮箱地址
-      password: ""                    # 发件人邮箱密码或授权码
-      to: ""                          # 收件人邮箱，多个用逗号分隔
-      smtp_server: ""                 # SMTP 服务器（可选，留空自动识别）
-      smtp_port: ""                   # SMTP 端口（可选，留空自动识别）
+      from: "2085549322@qq.com"       # 发件人邮箱地址
+      password: "dkciinxjojwhdiib"    # 发件人邮箱密码或授权码
+      to: "2085549322@qq.com"         # 收件人邮箱，多个用逗号分隔
+      smtp_server: "smtp.qq.com"      # SMTP 服务器（可选，留空自动识别）
+      smtp_port: "465"                # SMTP 端口（可选，留空自动识别）
 
     ntfy:
       server_url: "https://ntfy.sh"   # ntfy 服务器地址（可改为自托管）
